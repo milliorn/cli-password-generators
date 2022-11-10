@@ -1,6 +1,10 @@
-const program = require("commander");
+import chalk from "chalk";
+import clipboard from "clipboardy";
+import { program } from "commander";
+import createPassword from "./utils/createPassword.js";
+import savePassword from "./utils/savePassword.js";
 
-program.version("1.0.0").description("Passowrd Generator in Node.js");
+program.version("1.0.0").description("Password Generator");
 
 program
   .option("-l, --length <number>", "length of password", "8")
@@ -9,12 +13,20 @@ program
   .option("-ns, --no-symbols", "remove symbols")
   .parse();
 
-/**console.log(program.opts()); */
-
+/**deconstruct options passed in */
 const { length, save, numbers, symbols } = program.opts();
-
-/**console.log(numbers, symbols); */
 
 const createdPassword = createPassword(length, numbers, symbols);
 
-console.log(createdPassword);
+if (save) {
+  savePassword(createdPassword);
+}
+
+/** copy to clipboard */
+clipboard.writeSync(createdPassword);
+
+console.log(
+  chalk.greenBright("Generated Password -> " + chalk.bold(createdPassword))
+);
+
+console.log(chalk.yellow("Password copied to clipboard"));

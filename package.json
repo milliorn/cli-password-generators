@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/milliorn/node-cli-password-generator/issues"
   },
-  "homepage": "https://github.com/milliorn/node-cli-password-generator#readme"
+  "homepage": "https://github.com/milliorn/node-cli-password-generator#readme",
+  "dependencies": {
+    "chalk": "^5.1.2",
+    "clipboardy": "^3.0.0",
+    "commander": "^9.4.1"
+  }
 }

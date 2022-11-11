@@ -1,14 +1,14 @@
 {
   "name": "pass-gen",
   "description": "",
-  "main": "index.js",
-  "preferGlobal": true,
+  "main": "dist/index.js",
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "save": "node index -s",
+    "save": "node ./dist/index -s",
     "no-numbers": "node index -nn -s",
-    "no-symbols": "node index -ns -s"
+    "no-symbols": "node index -ns -s",
+    "tsc:build": "cd ./src && npx tsc"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
-    "eslint": "^8.27.0",
+    "@types/random-seed": "^0.3.3",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"

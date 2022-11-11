@@ -25,8 +25,6 @@ if (save) {
 /** copy to clipboard */
 clipboard.writeSync(createdPassword);
 
-console.log(
-  chalk.greenBright("Generated Password -> " + chalk.bold(createdPassword))
-);
+/**console.log(chalk.greenBright("Generated Password -> " + chalk.bold(createdPassword))); */
 
 console.log(chalk.yellow("Password copied to clipboard"));

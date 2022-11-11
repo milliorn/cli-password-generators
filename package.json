@@ -6,7 +6,9 @@
   "type": "module",
   "preferGlobal": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "save": "node index -s",
+    "no-numbers": "node index -nn -s",
+    "no-symbols": "node index -ns -s"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,10 @@
   "dependencies": {
     "chalk": "^5.1.2",
     "clipboardy": "^3.0.0",
-    "commander": "^9.4.1"
+    "commander": "^9.4.1",
+    "random-seed": "^0.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.27.0"
   }
 }

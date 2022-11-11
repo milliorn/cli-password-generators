@@ -4,7 +4,7 @@ import { EOL } from 'os'
 import { join } from 'path'
 import path from 'path'
 
-/**https://stackoverflow.com/a/68163774/11986604 */
+/** https://stackoverflow.com/a/68163774/11986604 */
 const __dirname = path.resolve()
 
 export default function savePassword(password) {

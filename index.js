@@ -13,7 +13,7 @@ program
   .option('-ns, --no-symbols', 'remove symbols')
   .parse()
 
-/**deconstruct options passed in */
+/** deconstruct options passed in */
 const { length, save, numbers, symbols } = program.opts()
 
 const createdPassword = createPassword(length, numbers, symbols)
@@ -25,6 +25,6 @@ if (save) {
 /** copy to clipboard */
 clipboard.writeSync(createdPassword)
 
-/**console.log(chalk.greenBright("Generated Password -> " + chalk.bold(createdPassword))) */
+/** console.log(chalk.greenBright("Generated Password -> " + chalk.bold(createdPassword))) */
 
 console.log(chalk.yellow('Password copied to clipboard'))

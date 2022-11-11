@@ -17,7 +17,7 @@ export default function createPassword(
 
 const generatePassword = (length, chars) => {
   let password = ''
-  /**https://github.com/skratchdot/random-seed */
+  /** https://github.com/skratchdot/random-seed */
   const rand = RandomSeed.create()
 
   for (let i = 0; i < length; i++) {

@@ -6,8 +6,9 @@
   "version": "1.0.0",
   "scripts": {
     "save": "node ./dist/index -s",
-    "no-numbers": "node index -nn -s",
-    "no-symbols": "node index -ns -s",
+    "no-numbers": "node ./dist/index -nn -s",
+    "no-symbols": "node ./dist/index -ns -s",
+    "only-letters": "node ./dist/index -nn -ns -s",
     "tsc:build": "cd ./src && npx tsc"
   },
   "repository": {

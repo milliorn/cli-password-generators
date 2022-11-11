@@ -1,8 +1,8 @@
-import RandomSeed from "random-seed";
+import RandomSeed from 'random-seed';
 
-const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const numbers = "0123456789";
-const symbols = "!@#$%^&*_-+=";
+const alpha = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const numbers = '0123456789';
+const symbols = '!@#$%^&*_-+=';
 
 export default function createPassword(
   length = 8,
@@ -10,13 +10,13 @@ export default function createPassword(
   hasSymbols = true
 ) {
   let chars = alpha;
-  hasNumbers ? (chars += numbers) : "";
-  hasSymbols ? (chars += symbols) : "";
+  hasNumbers ? (chars += numbers) : '';
+  hasSymbols ? (chars += symbols) : '';
   return generatePassword(length, chars);
 }
 
 const generatePassword = (length, chars) => {
-  let password = "";
+  let password = '';
   /**https://github.com/skratchdot/random-seed */
   const rand = RandomSeed.create();
 

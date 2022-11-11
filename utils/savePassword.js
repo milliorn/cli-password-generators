@@ -1,8 +1,7 @@
 import chalk from 'chalk'
 import { close, open, write } from 'fs'
 import { EOL } from 'os'
-import { join } from 'path'
-import path from 'path'
+import path, { join } from 'path'
 
 /** https://stackoverflow.com/a/68163774/11986604 */
 const __dirname = path.resolve()

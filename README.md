@@ -28,3 +28,23 @@ Install dependencies
 | -ns   | --no-symbols      | remove symbols                  |
 | -h    | --help            | display help for command        |
 | -V    | --version         | Show the version                |
+
+## Examples
+
+```sh
+node ./dist/index --length=20 -s
+
+vsmmqiIsL%c@H^6d7nq2
+```
+
+```sh
+node ./dist/index -s
+
+Password saved to passwords.txt
+```
+
+```sh
+node ./dist/index --length=20 -nn -s
+
+Generated Password -> GCE*BJWodyZKTprsc^cY
+```

@@ -1,5 +1,7 @@
 # node-cli-password-generator
 
+[![CodeQL](https://github.com/milliorn/node-cli-password-generator/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/milliorn/node-cli-password-generator/actions/workflows/github-code-scanning/codeql)
+
 This repository contains a simple command-line application for generating passwords. It is built using Node.js and TypeScript and utilizes various libraries to generate random passwords and perform other functionalities.
 
 ## Installation

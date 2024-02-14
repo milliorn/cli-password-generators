@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+
 	"github.com/urfave/cli/v2"
 )
 
 func main() {
-	// fmt.Println("Hello, World!")
 	app := &cli.App{
 		Name:  "hello",
 		Usage: "Print Hello World",
@@ -15,5 +17,7 @@ func main() {
 			return nil
 		},
 	}
-	app.Run([]string{"hello"})
+	if err := app.Run(os.Args); err != nil {
+		log.Fatal(err)
+	}
 }

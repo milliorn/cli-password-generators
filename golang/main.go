@@ -10,8 +10,8 @@ import (
 
 func main() {
 	app := &cli.App{
-		Name:  "hello",
-		Usage: "Print Hello World",
+		Name:  "create-password",
+		Usage: "Generate a password involves creating a random mix of uppercase and lowercase letters, numbers, and special symbols.",
 		Action: func(c *cli.Context) error {
 			fmt.Println("Hello, World!")
 			return nil

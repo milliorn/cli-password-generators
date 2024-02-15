@@ -20,8 +20,8 @@ func main() {
 				Value: 8,                        // Setting the default value of the flag
 				Usage: "Length of the password", // Setting the usage description of the flag
 				Action: func(ctx *cli.Context, v int) error { // Defining the action to be executed when the flag is set
-					if v > 94 {
-						return fmt.Errorf("length of password must be less than 94")
+					if v > 95 {
+						return fmt.Errorf("length of password must be less than 95")
 					}
 					return nil // Returning nil to indicate successful execution of the action
 				},

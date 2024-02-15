@@ -4,6 +4,7 @@ import (
 	"fmt" // Importing the 'fmt' package for formatted I/O operations
 	"log" // Importing the 'log' package for logging errors
 	"os"  // Importing the 'os' package for accessing command-line arguments and environment variables
+	"sort"
 
 	"github.com/urfave/cli/v2" // Importing the 'github.com/urfave/cli/v2' package for building CLI applications
 )
@@ -89,6 +90,9 @@ func main() {
 			return nil                   // Returning nil to indicate successful execution of the action
 		},
 	}
+
+	sort.Sort(cli.FlagsByName(app.Flags))       // Sorting the flags of the CLI application by name
+	sort.Sort(cli.CommandsByName(app.Commands)) // Sorting the commands of the CLI application by name
 
 	// Running the CLI application with the command-line arguments and handling any errors
 	if err := app.Run(os.Args); err != nil {

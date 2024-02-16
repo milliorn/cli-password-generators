@@ -10,10 +10,17 @@ import (
 )
 
 func main() {
+	cli.VersionFlag = &cli.BoolFlag{ // Setting the version flag of the CLI application
+		Name:    "version",                // Setting the name of the flag
+		Aliases: []string{"v"},            // Setting the aliases of the flag
+		Usage:   "print only the version", // Setting the usage description of the flag
+	}
+
 	// Creating a new CLI application instance with name and usage description
 	app := &cli.App{
-		Name:  "create-password",                                                                                                      // Setting the name of the CLI application
-		Usage: "Generate a password involves creating a random mix of uppercase and lowercase letters, numbers, and special symbols.", // Setting the usage description of the CLI application
+		Name:    "create-password",                                                                                                      // Setting the name of the CLI application
+		Version: "1.0.0",                                                                                                                // Setting the version of the CLI application
+		Usage:   "Generate a password involves creating a random mix of uppercase and lowercase letters, numbers, and special symbols.", // Setting the usage description of the CLI application
 		Flags: []cli.Flag{
 			&cli.IntFlag{
 				Name:  "length",                 // Setting the name of the flag

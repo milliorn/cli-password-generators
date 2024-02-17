@@ -63,13 +63,6 @@ func main() {
 			},
 
 			&cli.BoolFlag{
-				Name:    "no-ambiguous",                                   // Setting the name of the flag
-				Aliases: []string{"na"},                                   // Setting the aliases of the flag
-				Value:   false,                                            // Setting the default value of the flag
-				Usage:   "Exclude ambiguous characters from the password", // Setting the usage description of the flag
-			},
-
-			&cli.BoolFlag{
 				Name:    "no-similar",                                   // Setting the name of the flag
 				Aliases: []string{"nsi"},                                // Setting the aliases of the flag
 				Value:   false,                                          // Setting the default value of the flag
@@ -98,8 +91,9 @@ func main() {
 			},
 		},
 		Action: func(cCtx *cli.Context) error { // Defining the action to be executed when the CLI application is run
-			fmt.Println("Hello, World!") // Printing "Hello, World!" to the console
-			return nil                   // Returning nil to indicate successful execution of the action
+			// fmt.Println("Hello, World!") // Printing "Hello, World!" to the console
+			createPassword(cCtx) // Calling the 'createPassword' function with the context of the CLI application
+			return nil           // Returning nil to indicate successful execution of the action
 		},
 	}
 
@@ -110,4 +104,28 @@ func main() {
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err) // Logging fatal errors
 	}
+}
+
+func createPassword(cCtx *cli.Context) {
+	length := cCtx.Int("length")                // Getting the value of the 'length' flag
+	no_numbers := cCtx.Bool("no-numbers")       // Getting the value of the 'no-numbers' flag
+	no_symbols := cCtx.Bool("no-symbols")       // Getting the value of the 'no-symbols' flag
+	no_uppercase := cCtx.Bool("no-uppercase")   // Getting the value of the 'no-uppercase' flag
+	no_lowercase := cCtx.Bool("no-lowercase")   // Getting the value of the 'no-lowercase' flag
+	no_similar := cCtx.Bool("no-similar")       // Getting the value of the 'no-similar' flag
+	no_vowels := cCtx.Bool("no-vowels")         // Getting the value of the 'no-vowels' flag
+	no_consonants := cCtx.Bool("no-consonants") // Getting the value of the 'no-consonants' flag
+	no_letters := cCtx.Bool("no-letters")       // Getting the value of the 'no-letters' flag
+
+	fmt.Println(length) // Printing the value of the 'length' flag
+	fmt.Println(no_numbers)
+	fmt.Println(no_symbols)
+	fmt.Println(no_uppercase)
+	fmt.Println(no_lowercase)
+	fmt.Println(no_similar)
+	fmt.Println(no_vowels)
+	fmt.Println(no_consonants)
+	fmt.Println(no_letters)
+
+	panic("unimplemented")
 }

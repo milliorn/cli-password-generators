@@ -9,6 +9,13 @@ import (
 	"github.com/urfave/cli/v2" // Importing the 'github.com/urfave/cli/v2' package for building CLI applications
 )
 
+const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const numbers = "0123456789"
+const symbols = "!@#$%^&*_-+="
+const similar = "il1Lo0O"
+const vowels = "aeiouAEIOU"
+const consonants = "bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"
+
 func main() {
 	cli.VersionFlag = &cli.BoolFlag{ // Setting the version flag of the CLI application
 		Name:    "version",                // Setting the name of the flag
@@ -126,6 +133,4 @@ func createPassword(cCtx *cli.Context) {
 	fmt.Println(no_vowels)
 	fmt.Println(no_consonants)
 	fmt.Println(no_letters)
-
-	panic("unimplemented")
 }

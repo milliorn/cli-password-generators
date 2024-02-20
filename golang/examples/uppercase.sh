@@ -1,4 +1,5 @@
 #!/bin/bash
 
 # Run the application
-go run main.go -nle -ns
+cd ../
+go run main.go -ns -nn -nl

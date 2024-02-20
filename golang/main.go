@@ -7,7 +7,6 @@ import (
 	"math/rand"
 	"os"
 	"sort"
-	"strings"
 	"time"
 
 	"github.com/urfave/cli/v2"
@@ -21,6 +20,8 @@ const (
 	symbolChars  = "!@#$%^&*_-+="
 	defaultChars = upperChars + lowerChars + numberChars + symbolChars
 )
+
+var alphaChars = upperChars + lowerChars
 
 func main() {
 	cli.VersionFlag = &cli.BoolFlag{
@@ -124,11 +125,15 @@ func getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase b
 	var chars string
 
 	if !noLetters {
-		if !noLowercase {
-			chars += lowerChars
-		}
-		if !noUppercase {
-			chars += upperChars
+		if !noLowercase && !noUppercase {
+			chars += alphaChars
+		} else {
+			if !noLowercase {
+				chars += lowerChars
+			}
+			if !noUppercase {
+				chars += upperChars
+			}
 		}
 	}
 	if !noNumbers {
@@ -147,14 +152,13 @@ func getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase b
 }
 
 func generatePassword(length int, randSeed *rand.Rand, chars string) string {
-	var password strings.Builder
+	password := make([]byte, length)
 
 	for i := 0; i < length; i++ {
-		n := randSeed.Intn(len(chars))
-		password.WriteByte(chars[n])
+		password[i] = chars[randSeed.Intn(len(chars))]
 	}
 
-	return password.String()
+	return string(password)
 }
 
 func sortFlagsAndCommands(app *cli.App) {

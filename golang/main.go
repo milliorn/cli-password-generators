@@ -98,14 +98,10 @@ func main() {
 
 			chars := "" // Defining a variable to store the characters to be used in the password
 
-			if !noLetters { // Checking if letters are not excluded
-				if !noLowercase { // Checking if lowercase letters are not excluded
-					chars += alphaLower
-				}
-				if !noUppercase { // Checking if uppercase letters are not excluded
-					chars += alphaUpper
-				}
-			}
+			// Checking if letters are not excluded
+			// Checking if lowercase letters are not excluded
+			// Checking if uppercase letters are not excluded
+			chars = generateAlpha(noLetters, noLowercase, chars, noUppercase)
 
 			if !noNumbers { // Checking if numbers are not excluded
 				chars += numbers
@@ -141,4 +137,22 @@ func main() {
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err) // Logging fatal errors
 	}
+}
+
+// generateAlpha generates an alphanumeric string based on the provided parameters.
+// If noLetters is false, it includes both lowercase and uppercase alphabets in the generated string.
+// If noLowercase is false, it includes lowercase alphabets in the generated string.
+// If noUppercase is false, it includes uppercase alphabets in the generated string.
+// The chars parameter is used to append additional characters to the generated string.
+// The function returns the generated alphanumeric string.
+func generateAlpha(noLetters bool, noLowercase bool, chars string, noUppercase bool) string {
+	if !noLetters {
+		if !noLowercase {
+			chars += alphaLower
+		}
+		if !noUppercase {
+			chars += alphaUpper
+		}
+	}
+	return chars
 }

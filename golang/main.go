@@ -32,14 +32,22 @@ func main() {
 		Version: "1.0.0",                                                                                                                // Setting the version of the CLI application
 		Usage:   "Generate a password involves creating a random mix of uppercase and lowercase letters, numbers, and special symbols.", // Setting the usage description of the CLI application
 
+		// Defining the flags of the CLI application
 		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:    "override-length",                     // Setting the name of the flag
+				Aliases: []string{"ol"},                        // Setting the aliases of the flag
+				Value:   false,                                 // Setting the default value of the flag
+				Usage:   "Override the length of the password", // Setting the usage description of the flag
+			},
+
 			&cli.IntFlag{
 				Name:    "length",                 // Setting the name of the flag
 				Aliases: []string{"l"},            // Setting the aliases of the flag
 				Value:   8,                        // Setting the default value of the flag
 				Usage:   "Length of the password", // Setting the usage description of the flag
 				Action: func(ctx *cli.Context, v int) error { // Defining the action to be executed when the flag is set
-					if v > 95 {
+					if v > 95 && !ctx.Bool("override-length") {
 						return fmt.Errorf("length of password must be less than 74 due to sample size of characters available. Please try again with a smaller length.")
 					}
 					return nil // Returning nil to indicate successful execution of the action

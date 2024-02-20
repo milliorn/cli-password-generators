@@ -1,5 +1,5 @@
 {
-  "name": "pass-gen",
+  "name": "cli-password-generator",
   "description": "",
   "main": "dist/index.js",
   "type": "module",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/milliorn/node-cli-password-generator.git"
+    "url": "git+https://github.com/milliorn/cli-password-generators.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/milliorn/node-cli-password-generator/issues"
+    "url": "https://github.com/milliorn/cli-password-generators/issues"
   },
-  "homepage": "https://github.com/milliorn/node-cli-password-generator#readme",
+  "homepage": "https://github.com/milliorn/cli-password-generators#readme",
   "dependencies": {
     "chalk": "^5.1.2",
     "clipboardy": "^4.0.0",

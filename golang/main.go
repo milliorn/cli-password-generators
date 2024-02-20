@@ -11,11 +11,6 @@ import (
 	"github.com/urfave/cli/v2" // Importing the 'github.com/urfave/cli/v2' package for building CLI applications
 )
 
-const alphaLower = "abcdefghijklmnopqrstuvwxyz"
-const alphaUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-const numbers = "0123456789"
-const symbols = "!@#$%^&*_-+="
-
 func main() {
 	cli.VersionFlag = &cli.BoolFlag{ // Setting the version flag of the CLI application
 		Name:    "version",                // Setting the name of the flag
@@ -159,6 +154,8 @@ func generatePassword(length int, randSeed *rand.Rand, chars string, password st
 // If noSymbols is false, it appends the symbols to the chars string.
 // Returns the updated chars string.
 func generateSymbols(noSymbols bool, chars string) string {
+	const symbols = "!@#$%^&*_-+="
+
 	if !noSymbols {
 		chars += symbols
 	}
@@ -170,6 +167,8 @@ func generateSymbols(noSymbols bool, chars string) string {
 // The generated string is formed by concatenating the given chars and numbers.
 // It returns the generated string.
 func generateNumeric(noNumbers bool, chars string) string {
+	const numbers = "0123456789"
+
 	if !noNumbers {
 		chars += numbers
 	}
@@ -183,6 +182,9 @@ func generateNumeric(noNumbers bool, chars string) string {
 // The chars parameter is used to append additional characters to the generated string.
 // The function returns the generated alphanumeric string.
 func generateAlpha(noLetters bool, noLowercase bool, chars string, noUppercase bool) string {
+	alphaLower := "abcdefghijklmnopqrstuvwxyz"
+	alphaUpper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 	if !noLetters {
 		if !noLowercase {
 			chars += alphaLower

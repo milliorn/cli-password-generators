@@ -1,89 +1,90 @@
 package main
 
 import (
-	"fmt" // Importing the 'fmt' package for formatted I/O operations
-	"log" // Importing the 'log' package for logging errors
+	"fmt"
+	"log"
 	"math/rand"
-	"os" // Importing the 'os' package for accessing command-line arguments and environment variables
+	"os"
 	"sort"
+	"strings"
 	"time"
 
-	"github.com/urfave/cli/v2" // Importing the 'github.com/urfave/cli/v2' package for building CLI applications
+	"github.com/urfave/cli/v2"
+)
+
+// Define character sets
+const (
+	upperChars   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	lowerChars   = "abcdefghijklmnopqrstuvwxyz"
+	numberChars  = "0123456789"
+	symbolChars  = "!@#$%^&*_-+="
+	defaultChars = upperChars + lowerChars + numberChars + symbolChars
 )
 
 func main() {
-	cli.VersionFlag = &cli.BoolFlag{ // Setting the version flag of the CLI application
-		Name:    "version",                // Setting the name of the flag
-		Aliases: []string{"v"},            // Setting the aliases of the flag
-		Usage:   "print only the version", // Setting the usage description of the flag
+	cli.VersionFlag = &cli.BoolFlag{
+		Name:    "version",
+		Aliases: []string{"v"},
+		Usage:   "print only the version",
 	}
 
-	// Creating a new CLI application instance with name and usage description
 	app := &cli.App{
-		Name:    "create-password",                                                                                                      // Setting the name of the CLI application
-		Version: "1.0.0",                                                                                                                // Setting the version of the CLI application
-		Usage:   "Generate a password involves creating a random mix of uppercase and lowercase letters, numbers, and special symbols.", // Setting the usage description of the CLI application
+		Name:    "create-password",
+		Version: "1.0.0",
+		Usage:   "Generate a password involves creating a random mix of uppercase and lowercase letters, numbers, and special symbols.",
 
-		// Defining the flags of the CLI application
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
-				Name:    "override-length",                     // Setting the name of the flag
-				Aliases: []string{"ol"},                        // Setting the aliases of the flag
-				Value:   false,                                 // Setting the default value of the flag
-				Usage:   "Override the length of the password", // Setting the usage description of the flag
+				Name:    "override-length",
+				Aliases: []string{"ol"},
+				Value:   false,
+				Usage:   "Override the length of the password",
 			},
 
 			&cli.IntFlag{
-				Name:    "length",                 // Setting the name of the flag
-				Aliases: []string{"l"},            // Setting the aliases of the flag
-				Value:   8,                        // Setting the default value of the flag
-				Usage:   "Length of the password", // Setting the usage description of the flag
-				Action: func(ctx *cli.Context, v int) error { // Defining the action to be executed when the flag is set
-					if v > 74 && !ctx.Bool("override-length") {
-						return fmt.Errorf("length of password must be less than 74 due to sample size of characters available. Please try again with a smaller length")
-					}
-					return nil // Returning nil to indicate successful execution of the action
-				},
+				Name:    "length",
+				Aliases: []string{"l"},
+				Value:   8,
+				Usage:   "Length of the password",
 			},
 
 			&cli.BoolFlag{
-				Name:    "no-numbers",                        // Setting the name of the flag
-				Aliases: []string{"nn"},                      // Setting the aliases of the flag
-				Value:   false,                               // Setting the default value of the flag
-				Usage:   "Exclude numbers from the password", // Setting the usage description of the flag
+				Name:    "no-numbers",
+				Aliases: []string{"nn"},
+				Value:   false,
+				Usage:   "Exclude numbers from the password",
 			},
 
 			&cli.BoolFlag{
-				Name:    "no-symbols",                                // Setting the name of the flag
-				Aliases: []string{"ns"},                              // Setting the aliases of the flag
-				Value:   false,                                       // Setting the default value of the flag
-				Usage:   "Exclude special symbols from the password", // Setting the usage description of the flag
+				Name:    "no-symbols",
+				Aliases: []string{"ns"},
+				Value:   false,
+				Usage:   "Exclude special symbols from the password",
 			},
 
 			&cli.BoolFlag{
-				Name:    "no-uppercase",                                // Setting the name of the flag
-				Aliases: []string{"nu"},                                // Setting the aliases of the flag
-				Value:   false,                                         // Setting the default value of the flag
-				Usage:   "Exclude uppercase letters from the password", // Setting the usage description of the flag
+				Name:    "no-uppercase",
+				Aliases: []string{"nu"},
+				Value:   false,
+				Usage:   "Exclude uppercase letters from the password",
 			},
 
 			&cli.BoolFlag{
-				Name:    "no-lowercase",                                // Setting the name of the flag
-				Aliases: []string{"nl"},                                // Setting the aliases of the flag
-				Value:   false,                                         // Setting the default value of the flag
-				Usage:   "Exclude lowercase letters from the password", // Setting the usage description of the flag
+				Name:    "no-lowercase",
+				Aliases: []string{"nl"},
+				Value:   false,
+				Usage:   "Exclude lowercase letters from the password",
 			},
 
 			&cli.BoolFlag{
-				Name:    "no-letters",                        // Setting the name of the flag
-				Aliases: []string{"nle"},                     // Setting the aliases of the flag
-				Value:   false,                               // Setting the default value of the flag
-				Usage:   "Exclude letters from the password", // Setting the usage description of the flag
+				Name:    "no-letters",
+				Aliases: []string{"nle"},
+				Value:   false,
+				Usage:   "Exclude letters from the password",
 			},
 		},
 
-		Action: func(cCtx *cli.Context) error { // Defining the action to be executed when the CLI application is run
-			// Getting the value of flags from the context
+		Action: func(cCtx *cli.Context) error {
 			length := cCtx.Int("length")
 			noLetters := cCtx.Bool("no-letters")
 			noLowercase := cCtx.Bool("no-lowercase")
@@ -91,107 +92,62 @@ func main() {
 			noSymbols := cCtx.Bool("no-symbols")
 			noUppercase := cCtx.Bool("no-uppercase")
 
-			chars := "" // Defining a variable to store the characters to be used in the password
+			chars := getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase)
 
-			// Checking if letters are not excluded
-			// Checking if lowercase letters are not excluded
-			// Checking if uppercase letters are not excluded
-			chars = generateAlpha(noLetters, noLowercase, chars, noUppercase)
+			randSeed := rand.New(rand.NewSource(time.Now().UnixNano()))
 
-			// Checking if numbers are not excluded
-			chars = generateNumeric(noNumbers, chars)
-
-			// Checking if symbols are not excluded
-			chars = generateSymbols(noSymbols, chars)
-
-			randSeed := rand.New(rand.NewSource(time.Now().UnixNano())) // Creating a new random seed
-
-			var password string // Defining a variable to store the password
-
-			// Generating the password
-			// Generating a random number within the length of the characters
-			// Adding the character at the random index to the password
-			password = generatePassword(length, randSeed, chars, password)
-
-			if length > len(password) { // Checking if the length of the password requested is greater than the length of the password generated
-				log.Fatal("length of password requested is greater than the length of the password generated. Please try again.")
-			}
+			password := generatePassword(length, randSeed, chars)
 
 			fmt.Println(password)
 			return nil
 		},
 	}
 
-	sort.Sort(cli.FlagsByName(app.Flags))       // Sorting the flags of the CLI application by name
-	sort.Sort(cli.CommandsByName(app.Commands)) // Sorting the commands of the CLI application by name
+	// Sorting flags and commands
+	sortFlagsAndCommands(app)
 
-	// Running the CLI application with the command-line arguments and handling any errors
 	if err := app.Run(os.Args); err != nil {
-		log.Fatal(err) // Logging fatal errors
+		log.Fatal(err)
 	}
 }
 
-// generatePassword generates a random password of the specified length using the provided random seed,
-// character set, and initial password. It returns the generated password.
-//
-// Parameters:
-// - length: The length of the password to generate.
-// - randSeed: The random seed used for generating random numbers.
-// - chars: The character set from which to select characters for the password.
-// - password: The initial password to append characters to.
-//
-// Returns:
-// The generated password.
-func generatePassword(length int, randSeed *rand.Rand, chars string, password string) string {
-	for i := 0; i < length; i++ {
-		n := randSeed.Intn(len(chars))
-		password += string(chars[n])
-	}
-	return password
-}
-
-// generateSymbols generates a string of characters based on the given parameters.
-// If noSymbols is false, it appends the symbols to the chars string.
-// Returns the updated chars string.
-func generateSymbols(noSymbols bool, chars string) string {
-	const symbols = "!@#$%^&*_-+="
-
-	if !noSymbols {
-		chars += symbols
-	}
-	return chars
-}
-
-// generateNumeric generates a string of characters based on the given parameters.
-// If noNumbers is false, it includes numbers in the generated string.
-// The generated string is formed by concatenating the given chars and numbers.
-// It returns the generated string.
-func generateNumeric(noNumbers bool, chars string) string {
-	const numbers = "0123456789"
-
-	if !noNumbers {
-		chars += numbers
-	}
-	return chars
-}
-
-// generateAlpha generates an alphanumeric string based on the provided parameters.
-// If noLetters is false, it includes both lowercase and uppercase alphabets in the generated string.
-// If noLowercase is false, it includes lowercase alphabets in the generated string.
-// If noUppercase is false, it includes uppercase alphabets in the generated string.
-// The chars parameter is used to append additional characters to the generated string.
-// The function returns the generated alphanumeric string.
-func generateAlpha(noLetters bool, noLowercase bool, chars string, noUppercase bool) string {
-	alphaLower := "abcdefghijklmnopqrstuvwxyz"
-	alphaUpper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+func getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase bool) string {
+	chars := ""
 
 	if !noLetters {
 		if !noLowercase {
-			chars += alphaLower
+			chars += lowerChars
 		}
 		if !noUppercase {
-			chars += alphaUpper
+			chars += upperChars
 		}
 	}
+	if !noNumbers {
+		chars += numberChars
+	}
+	if !noSymbols {
+		chars += symbolChars
+	}
+
+	if chars == "" {
+		chars = defaultChars
+	}
+
 	return chars
+}
+
+func generatePassword(length int, randSeed *rand.Rand, chars string) string {
+	var password strings.Builder
+
+	for i := 0; i < length; i++ {
+		n := randSeed.Intn(len(chars))
+		password.WriteByte(chars[n])
+	}
+
+	return password.String()
+}
+
+func sortFlagsAndCommands(app *cli.App) {
+	sort.Sort(cli.FlagsByName(app.Flags))
+	sort.Sort(cli.CommandsByName(app.Commands))
 }

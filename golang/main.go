@@ -123,8 +123,11 @@ func main() {
 }
 
 // getCharacterSet returns the character set to use for generating a password.
-// The noLetters, noLowercase, noNumbers, noSymbols, and noUppercase parameters specify whether to exclude certain characters from the character set.
+// The noLetters, noLowercase, noNumbers, noSymbols, and noUppercase parameters
+// specify whether to exclude letters, lowercase letters, numbers, symbols, and
+// uppercase letters from the character set, respectively.
 // The function returns the character set to use for generating a password.
+// If there is an error, the function returns the error.
 func getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase bool) (string, error) {
 	if noLetters && noNumbers && noSymbols {
 		return "", errors.New("all character types are excluded, unable to generate password")
@@ -169,12 +172,10 @@ func getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase b
 }
 
 // generatePassword returns a randomly generated password.
-// The length parameter specifies the length of the password.
-// The randSeed parameter is a random number generator.
+// The length parameter specifies the length of the password to generate.
+// The randSeed parameter is the random number generator to use.
 // The chars parameter is the character set to use for generating the password.
-// The function returns the generated password.
-// The password is a string that contains the randomly generated password.
-// The password length is equal to the length parameter.
+// The function returns a randomly generated password.
 func generatePassword(length int, randSeed *rand.Rand, chars string) string {
 	password := make([]byte, length)
 

@@ -1,7 +1,10 @@
 package main
 
 import (
+	"math/rand"
+	"strings"
 	"testing"
+	"time"
 
 	"github.com/urfave/cli/v2"
 )
@@ -203,6 +206,54 @@ func TestGetCharacterSet(t *testing.T) {
 			// Check if the returned error matches the expected error
 			if (err == nil && test.expectedError != nil) || (err != nil && test.expectedError == nil) || (err != nil && test.expectedError != nil && err.Error() != test.expectedError.Error()) {
 				t.Errorf("Expected error %v, but got %v", test.expectedError, err)
+			}
+		})
+	}
+}
+
+func TestGeneratePassword(t *testing.T) {
+	// Test cases covering different scenarios
+	tests := []struct {
+		name   string
+		length int
+		chars  string
+	}{
+		{
+			name:   "Length8",
+			length: 8,
+			chars:  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*_-+=",
+		},
+		{
+			name:   "Length16",
+			length: 16,
+			chars:  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*_-+=",
+		},
+		{
+			name:   "Length32",
+			length: 32,
+			chars:  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*_-+=",
+		},
+	}
+
+	// Run tests
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			// Create a new random number generator
+			randSeed := rand.New(rand.NewSource(time.Now().UnixNano()))
+
+			// Call the generatePassword function
+			password := generatePassword(test.length, randSeed, test.chars)
+
+			// Check if the length of the generated password matches the expected length
+			if len(password) != test.length {
+				t.Errorf("Expected password length %d, but got %d", test.length, len(password))
+			}
+
+			// Check if each character in the generated password belongs to the provided character set
+			for _, char := range password {
+				if !strings.ContainsRune(test.chars, char) {
+					t.Errorf("Generated password contains invalid character: %c", char)
+				}
 			}
 		})
 	}

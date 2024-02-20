@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"log"
@@ -122,57 +123,49 @@ func main() {
 }
 
 // getCharacterSet returns the character set to use for generating a password.
-// If all character types are excluded, an error is returned.
-// If no characters are included, an error is returned.
-// Otherwise, the character set is returned.
-// The character set is a string that contains the characters to use for generating a password.
-// The string may contain uppercase and lowercase letters, numbers, and special symbols.
-// The noLetters, noLowercase, noNumbers, noSymbols, and noUppercase parameters are used to exclude character types from the character set.
-// If a parameter is true, the corresponding character type is excluded from the character set.
-// If a parameter is false, the corresponding character type is included in the character set.
-// The function returns the character set and an error.
+// The noLetters, noLowercase, noNumbers, noSymbols, and noUppercase parameters specify whether to exclude certain characters from the character set.
+// The function returns the character set to use for generating a password.
 func getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase bool) (string, error) {
 	if noLetters && noNumbers && noSymbols {
 		return "", errors.New("all character types are excluded, unable to generate password")
 	}
 
-	var chars string
+	// Create a buffer to store the character set
+	var buf bytes.Buffer
 
-	// If no letters are excluded, add them to the character set
+	// If no letters are excluded, add them to the buffer
 	if !noLetters {
-		// If no uppercase or lowercase letters are excluded, add them to the character set
+		// If no uppercase or lowercase letters are excluded, add them to the buffer
 		if !noLowercase && !noUppercase {
-			chars += alphaChars
+			buf.WriteString(alphaChars)
 		} else {
-			// If no letters are excluded, add them to the character set
+			// If no letters are excluded, add them to the buffer
 			if !noLowercase {
-				chars += lowerChars
+				buf.WriteString(lowerChars)
 			}
-			// If no letters are excluded, add them to the character set
+			// If no letters are excluded, add them to the buffer
 			if !noUppercase {
-				chars += upperChars
+				buf.WriteString(upperChars)
 			}
 		}
 	}
 
-	// If no numbers or symbols are excluded, add them to the character set
+	// If no numbers or symbols are excluded, add them to the buffer
 	if !noNumbers {
-		chars += numberChars
+		buf.WriteString(numberChars)
 	}
 
-	// If no symbols are excluded, add them to the character set
+	// If no symbols are excluded, add them to the buffer
 	if !noSymbols {
-		chars += symbolChars
+		buf.WriteString(symbolChars)
 	}
 
 	// If no characters are included, return an error
-	if chars == "" {
-		// If no characters are included, return an error
+	if buf.Len() == 0 {
 		return "", errors.New("no characters available for password generation")
 	}
 
-	// If no characters are included, return an error
-	return chars, nil
+	return buf.String(), nil
 }
 
 // generatePassword returns a randomly generated password.

@@ -98,11 +98,11 @@ func TestFlags(t *testing.T) {
 		expected int // Define expected values here based on your test cases
 	}{
 		{"TestLengthFlagSet", []string{"--length=10"}, 10},
-		{"TestNoNumbersFlagSet", []string{"--no-numbers"}, 0},     // Assuming it's 0 if set
-		{"TestNoSymbolsFlagSet", []string{"--no-symbols"}, 0},     // Assuming it's 0 if set
-		{"TestNoUppercaseFlagSet", []string{"--no-uppercase"}, 0}, // Assuming it's 0 if set
-		{"TestNoLowercaseFlagSet", []string{"--no-lowercase"}, 0}, // Assuming it's 0 if set
-		{"TestNoLettersFlagSet", []string{"--no-letters"}, 0},     // Assuming it's 0 if set
+		{"TestNoNumbersFlagSet", []string{"--no-numbers"}, 0},
+		{"TestNoSymbolsFlagSet", []string{"--no-symbols"}, 0},
+		{"TestNoUppercaseFlagSet", []string{"--no-uppercase"}, 0},
+		{"TestNoLowercaseFlagSet", []string{"--no-lowercase"}, 0},
+		{"TestNoLettersFlagSet", []string{"--no-letters"}, 0},
 	}
 	// Iterate through the test cases
 	for _, tt := range tests {
@@ -147,7 +147,7 @@ func TestGetCharacterSet(t *testing.T) {
 			noNumbers:            false,
 			noSymbols:            false,
 			noUppercase:          false,
-			expectedCharacterSet: "0123456789!@#$%^&*_-+=", // Assuming no letters means no uppercase and lowercase
+			expectedCharacterSet: "0123456789!@#$%^&*_-+=",
 			expectedError:        nil,
 		},
 		{
@@ -167,7 +167,7 @@ func TestGetCharacterSet(t *testing.T) {
 			noNumbers:            true,
 			noSymbols:            false,
 			noUppercase:          false,
-			expectedCharacterSet: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*_-+=", // Assuming no numbers means no numbers
+			expectedCharacterSet: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*_-+=",
 			expectedError:        nil,
 		},
 		{
@@ -177,7 +177,7 @@ func TestGetCharacterSet(t *testing.T) {
 			noNumbers:            false,
 			noSymbols:            true,
 			noUppercase:          false,
-			expectedCharacterSet: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", // Assuming no symbols means no symbols
+			expectedCharacterSet: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
 			expectedError:        nil,
 		},
 		{
@@ -187,7 +187,7 @@ func TestGetCharacterSet(t *testing.T) {
 			noNumbers:            false,
 			noSymbols:            false,
 			noUppercase:          true,
-			expectedCharacterSet: "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*_-+=", // Assuming no uppercase means no uppercase
+			expectedCharacterSet: "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*_-+=",
 			expectedError:        nil,
 		},
 	}

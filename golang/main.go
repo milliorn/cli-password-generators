@@ -103,23 +103,20 @@ func main() {
 			// Checking if uppercase letters are not excluded
 			chars = generateAlpha(noLetters, noLowercase, chars, noUppercase)
 
-			if !noNumbers { // Checking if numbers are not excluded
-				chars += numbers
-			}
+			// Checking if numbers are not excluded
+			chars = generateNumeric(noNumbers, chars)
 
-			if !noSymbols { // Checking if symbols are not excluded
-				chars += symbols
-			}
+			// Checking if symbols are not excluded
+			chars = generateSymbols(noSymbols, chars)
 
 			randSeed := rand.New(rand.NewSource(time.Now().UnixNano())) // Creating a new random seed
 
 			var password string // Defining a variable to store the password
 
 			// Generating the password
-			for i := 0; i < length; i++ {
-				n := randSeed.Intn(len(chars)) // Generating a random number within the length of the characters
-				password += string(chars[n])   // Adding the character at the random index to the password
-			}
+			// Generating a random number within the length of the characters
+			// Adding the character at the random index to the password
+			password = generatePassword(length, randSeed, chars, password)
 
 			if length > len(password) { // Checking if the length of the password requested is greater than the length of the password generated
 				log.Fatal("length of password requested is greater than the length of the password generated. Please try again.")
@@ -137,6 +134,46 @@ func main() {
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err) // Logging fatal errors
 	}
+}
+
+// generatePassword generates a random password of the specified length using the provided random seed,
+// character set, and initial password. It returns the generated password.
+//
+// Parameters:
+// - length: The length of the password to generate.
+// - randSeed: The random seed used for generating random numbers.
+// - chars: The character set from which to select characters for the password.
+// - password: The initial password to append characters to.
+//
+// Returns:
+// The generated password.
+func generatePassword(length int, randSeed *rand.Rand, chars string, password string) string {
+	for i := 0; i < length; i++ {
+		n := randSeed.Intn(len(chars))
+		password += string(chars[n])
+	}
+	return password
+}
+
+// generateSymbols generates a string of characters based on the given parameters.
+// If noSymbols is false, it appends the symbols to the chars string.
+// Returns the updated chars string.
+func generateSymbols(noSymbols bool, chars string) string {
+	if !noSymbols {
+		chars += symbols
+	}
+	return chars
+}
+
+// generateNumeric generates a string of characters based on the given parameters.
+// If noNumbers is false, it includes numbers in the generated string.
+// The generated string is formed by concatenating the given chars and numbers.
+// It returns the generated string.
+func generateNumeric(noNumbers bool, chars string) string {
+	if !noNumbers {
+		chars += numbers
+	}
+	return chars
 }
 
 // generateAlpha generates an alphanumeric string based on the provided parameters.

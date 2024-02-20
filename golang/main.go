@@ -11,13 +11,10 @@ import (
 	"github.com/urfave/cli/v2" // Importing the 'github.com/urfave/cli/v2' package for building CLI applications
 )
 
-const alpha_lower = "abcdefghijklmnopqrstuvwxyz"
-const alpha_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const alphaLower = "abcdefghijklmnopqrstuvwxyz"
+const alphaUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const numbers = "0123456789"
 const symbols = "!@#$%^&*_-+="
-
-// const vowels = "aeiouAEIOU"
-// const consonants = "bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"
 
 func main() {
 	cli.VersionFlag = &cli.BoolFlag{ // Setting the version flag of the CLI application
@@ -47,8 +44,8 @@ func main() {
 				Value:   8,                        // Setting the default value of the flag
 				Usage:   "Length of the password", // Setting the usage description of the flag
 				Action: func(ctx *cli.Context, v int) error { // Defining the action to be executed when the flag is set
-					if v > 95 && !ctx.Bool("override-length") {
-						return fmt.Errorf("length of password must be less than 74 due to sample size of characters available. Please try again with a smaller length.")
+					if v > 74 && !ctx.Bool("override-length") {
+						return fmt.Errorf("length of password must be less than 74 due to sample size of characters available. Please try again with a smaller length")
 					}
 					return nil // Returning nil to indicate successful execution of the action
 				},
@@ -82,27 +79,6 @@ func main() {
 				Usage:   "Exclude lowercase letters from the password", // Setting the usage description of the flag
 			},
 
-			// &cli.BoolFlag{
-			// 	Name:    "no-similar",                                   // Setting the name of the flag
-			// 	Aliases: []string{"nsi"},                                // Setting the aliases of the flag
-			// 	Value:   false,                                          // Setting the default value of the flag
-			// 	Usage:   "Exclude similar characters from the password", // Setting the usage description of the flag
-			// },
-
-			// &cli.BoolFlag{
-			// 	Name:    "no-vowels",                        // Setting the name of the flag
-			// 	Aliases: []string{"nv"},                     // Setting the aliases of the flag
-			// 	Value:   false,                              // Setting the default value of the flag
-			// 	Usage:   "Exclude vowels from the password", // Setting the usage description of the flag
-			// },
-
-			// &cli.BoolFlag{
-			// 	Name:    "no-consonants",                        // Setting the name of the flag
-			// 	Aliases: []string{"nc"},                         // Setting the aliases of the flag
-			// 	Value:   false,                                  // Setting the default value of the flag
-			// 	Usage:   "Exclude consonants from the password", // Setting the usage description of the flag
-			// },
-
 			&cli.BoolFlag{
 				Name:    "no-letters",                        // Setting the name of the flag
 				Aliases: []string{"nle"},                     // Setting the aliases of the flag
@@ -112,51 +88,49 @@ func main() {
 		},
 
 		Action: func(cCtx *cli.Context) error { // Defining the action to be executed when the CLI application is run
-			length := cCtx.Int("length") // Getting the value of the 'length' flag
-			// no_consonants := cCtx.Bool("no-consonants") // Getting the value of the 'no-consonants' flag
-			no_letters := cCtx.Bool("no-letters")     // Getting the value of the 'no-letters' flag
-			no_lowercase := cCtx.Bool("no-lowercase") // Getting the value of the 'no-lowercase' flag
-			no_numbers := cCtx.Bool("no-numbers")     // Getting the value of the 'no-numbers' flag
-			// no_similar := cCtx.Bool("no-similar")       // Getting the value of the 'no-similar' flag
-			no_symbols := cCtx.Bool("no-symbols")     // Getting the value of the 'no-symbols' flag
-			no_uppercase := cCtx.Bool("no-uppercase") // Getting the value of the 'no-uppercase' flag
-			// no_vowels := cCtx.Bool("no-vowels")       // Getting the value of the 'no-vowels' flag
+			// Getting the value of flags from the context
+			length := cCtx.Int("length")
+			noLetters := cCtx.Bool("no-letters")
+			noLowercase := cCtx.Bool("no-lowercase")
+			noNumbers := cCtx.Bool("no-numbers")
+			noSymbols := cCtx.Bool("no-symbols")
+			noUppercase := cCtx.Bool("no-uppercase")
 
-			chars := "" // Setting the characters to be used for generating the password
+			chars := "" // Defining a variable to store the characters to be used in the password
 
-			if !no_letters { // Checking if the 'no-letters' flag is set
-				if !no_uppercase { // Checking if the 'no-uppercase' flag is not set
-					chars += alpha_upper
+			if !noLetters { // Checking if letters are not excluded
+				if !noLowercase { // Checking if lowercase letters are not excluded
+					chars += alphaLower
 				}
-
-				if !no_lowercase { // Checking if the 'no-lowercase' flag is not set
-					chars += alpha_lower
+				if !noUppercase { // Checking if uppercase letters are not excluded
+					chars += alphaUpper
 				}
 			}
 
-			if !no_numbers { // Checking if the 'no-numbers' flag is not set
+			if !noNumbers { // Checking if numbers are not excluded
 				chars += numbers
 			}
 
-			if !no_symbols { // Checking if the 'no-symbols' flag is not set
+			if !noSymbols { // Checking if symbols are not excluded
 				chars += symbols
 			}
 
-			var password string // Declaring a variable to store the generated password
-
 			randSeed := rand.New(rand.NewSource(time.Now().UnixNano())) // Creating a new random seed
 
-			for i := 0; i < length; i++ { // Generating the password
+			var password string // Defining a variable to store the password
+
+			// Generating the password
+			for i := 0; i < length; i++ {
 				n := randSeed.Intn(len(chars)) // Generating a random number within the length of the characters
-				password += string(chars[n])   // Appending the character at the random index to the password
+				password += string(chars[n])   // Adding the character at the random index to the password
 			}
 
-			if length > len(password) {
-				log.Fatal("length of password requested is greater than the length of the password generated. Please try again with a smaller length.")
+			if length > len(password) { // Checking if the length of the password requested is greater than the length of the password generated
+				log.Fatal("length of password requested is greater than the length of the password generated. Please try again.")
 			}
 
-			fmt.Println(password) // Printing the generated password
-			return nil            // Returning nil to indicate successful execution of the action
+			fmt.Println(password)
+			return nil
 		},
 	}
 

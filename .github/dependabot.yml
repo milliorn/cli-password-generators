@@ -5,7 +5,6 @@
 
 version: 2
 updates:
-
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -14,6 +13,12 @@ updates:
 
   # Maintain dependencies for npm
   - package-ecosystem: "npm"
-    directory: "/"
+    directory: "/node"
+    schedule:
+      interval: "monthly"
+
+  # Maintain dependencies for Go Modules
+  - package-ecosystem: "gomod"
+    directory: "/golang"
     schedule:
       interval: "monthly"

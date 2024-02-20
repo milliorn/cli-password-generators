@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"math/rand"
@@ -92,7 +93,11 @@ func main() {
 			noSymbols := cCtx.Bool("no-symbols")
 			noUppercase := cCtx.Bool("no-uppercase")
 
-			chars := getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase)
+			chars, err := getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase)
+
+			if err != nil {
+				log.Fatal(err)
+			}
 
 			randSeed := rand.New(rand.NewSource(time.Now().UnixNano()))
 
@@ -111,8 +116,12 @@ func main() {
 	}
 }
 
-func getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase bool) string {
-	chars := ""
+func getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase bool) (string, error) {
+	if noLetters && noNumbers && noSymbols {
+		return "", errors.New("all character types are excluded, unable to generate password")
+	}
+
+	var chars string
 
 	if !noLetters {
 		if !noLowercase {
@@ -130,10 +139,11 @@ func getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase b
 	}
 
 	if chars == "" {
-		chars = defaultChars
+		// If no characters are included, return an error
+		return "", errors.New("no characters available for password generation")
 	}
 
-	return chars
+	return chars, nil
 }
 
 func generatePassword(length int, randSeed *rand.Rand, chars string) string {

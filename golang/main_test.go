@@ -115,3 +115,95 @@ func TestFlags(t *testing.T) {
 	}
 }
 
+func TestGetCharacterSet(t *testing.T) {
+	// Test cases covering different scenarios
+	tests := []struct {
+		name                 string
+		noLetters            bool
+		noLowercase          bool
+		noNumbers            bool
+		noSymbols            bool
+		noUppercase          bool
+		expectedCharacterSet string
+		expectedError        error
+	}{
+		{
+			name:                 "AllCharactersIncluded",
+			noLetters:            false,
+			noLowercase:          false,
+			noNumbers:            false,
+			noSymbols:            false,
+			noUppercase:          false,
+			expectedCharacterSet: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*_-+=",
+			expectedError:        nil,
+		},
+		{
+			name:                 "NoLetters",
+			noLetters:            true,
+			noLowercase:          false,
+			noNumbers:            false,
+			noSymbols:            false,
+			noUppercase:          false,
+			expectedCharacterSet: "0123456789!@#$%^&*_-+=", // Assuming no letters means no uppercase and lowercase
+			expectedError:        nil,
+		},
+		{
+			name:                 "NoLowercase",
+			noLetters:            false,
+			noLowercase:          true,
+			noNumbers:            false,
+			noSymbols:            false,
+			noUppercase:          false,
+			expectedCharacterSet: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*_-+=",
+			expectedError:        nil,
+		},
+		{
+			name:                 "NoNumbers",
+			noLetters:            false,
+			noLowercase:          false,
+			noNumbers:            true,
+			noSymbols:            false,
+			noUppercase:          false,
+			expectedCharacterSet: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*_-+=", // Assuming no numbers means no numbers
+			expectedError:        nil,
+		},
+		{
+			name:                 "NoSymbols",
+			noLetters:            false,
+			noLowercase:          false,
+			noNumbers:            false,
+			noSymbols:            true,
+			noUppercase:          false,
+			expectedCharacterSet: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", // Assuming no symbols means no symbols
+			expectedError:        nil,
+		},
+		{
+			name:                 "NoUppercase",
+			noLetters:            false,
+			noLowercase:          false,
+			noNumbers:            false,
+			noSymbols:            false,
+			noUppercase:          true,
+			expectedCharacterSet: "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*_-+=", // Assuming no uppercase means no uppercase
+			expectedError:        nil,
+		},
+	}
+
+	// Run tests
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			// Call the getCharacterSet function with test input parameters
+			characterSet, err := getCharacterSet(test.noLetters, test.noLowercase, test.noNumbers, test.noSymbols, test.noUppercase)
+
+			// Check if the returned character set matches the expected character set
+			if characterSet != test.expectedCharacterSet {
+				t.Errorf("Expected character set %s, but got %s", test.expectedCharacterSet, characterSet)
+			}
+
+			// Check if the returned error matches the expected error
+			if (err == nil && test.expectedError != nil) || (err != nil && test.expectedError == nil) || (err != nil && test.expectedError != nil && err.Error() != test.expectedError.Error()) {
+				t.Errorf("Expected error %v, but got %v", test.expectedError, err)
+			}
+		})
+	}
+}

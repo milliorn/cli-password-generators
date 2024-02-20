@@ -36,13 +36,6 @@ func main() {
 		Usage:   "Generate a password involves creating a random mix of uppercase and lowercase letters, numbers, and special symbols.",
 
 		Flags: []cli.Flag{
-			&cli.BoolFlag{
-				Name:    "override-length",
-				Aliases: []string{"ol"},
-				Value:   false,
-				Usage:   "Override the length of the password",
-			},
-
 			&cli.IntFlag{
 				Name:    "length",
 				Aliases: []string{"l"},
@@ -113,7 +106,7 @@ func main() {
 	sortFlagsAndCommands(app)
 
 	if err := app.Run(os.Args); err != nil {
-		log.Fatal(err)
+		log.Fatalf("error: %s", err)
 	}
 }
 

@@ -14,14 +14,12 @@ import (
 
 // Define character sets
 const (
-	upperChars   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	lowerChars   = "abcdefghijklmnopqrstuvwxyz"
-	numberChars  = "0123456789"
-	symbolChars  = "!@#$%^&*_-+="
-	defaultChars = upperChars + lowerChars + numberChars + symbolChars
+	upperChars  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	lowerChars  = "abcdefghijklmnopqrstuvwxyz"
+	numberChars = "0123456789"
+	symbolChars = "!@#$%^&*_-+="
+	alphaChars  = upperChars + lowerChars
 )
-
-var alphaChars = upperChars + lowerChars
 
 // main is the entry point of the program.
 func main() {

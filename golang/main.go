@@ -96,7 +96,7 @@ func main() {
 			chars, err := getCharacterSet(noLetters, noLowercase, noNumbers, noSymbols, noUppercase)
 
 			if err != nil {
-				log.Fatal(err)
+				return fmt.Errorf("failed to get character set: %w", err)
 			}
 
 			randSeed := rand.New(rand.NewSource(time.Now().UnixNano()))

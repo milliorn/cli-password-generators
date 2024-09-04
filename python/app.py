@@ -4,30 +4,33 @@ import os
 from random import shuffle
 
 APP_NAME = "CLI-Password Generator"
-LOWER_CHARS = "abcdefghijklmnopqrstuvwxyz"
-UPPER_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+DEFAULT_BOOL = False
+DEFAULT_LENGTH = 8
+
 NUMBER_CHARS = "0123456789"
 SYMBOL_CHARS = "!@#$%^&*_-+="
+
+UPPER_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+LOWER_CHARS = "abcdefghijklmnopqrstuvwxyz"
+
 ALPHA_CHARS = UPPER_CHARS + LOWER_CHARS
-DEFAULT_LENGTH = 8
-DEFAULT_BOOL = False
 
 
 def create_parser():
     parser = argparse.ArgumentParser(description=APP_NAME)
 
-    parser.add_argument(
-        "-l", "--length", type=int, help="Length of the password", default=DEFAULT_LENGTH)
-    parser.add_argument("-nn", "--no-numbers",
-                        help="Exclude numbers from the password", action='store_true', default=DEFAULT_BOOL)
-    parser.add_argument("-ns", "--no-symbols",
-                        help="Exclude special symbols from the password", action='store_true', default=DEFAULT_BOOL)
-    parser.add_argument("-nu", "--no-uppercase",
-                        help="Exclude uppercase letters from the password", action='store_true', default=DEFAULT_BOOL)
+    parser.add_argument("-l", "--length", type=int,
+                        help="Length of the password", default=DEFAULT_LENGTH)
     parser.add_argument("-nl", "--no-lowercase", dest='no_lowercase',
                         help="Exclude lowercase letters from the password", action='store_true', default=DEFAULT_BOOL)
     parser.add_argument("-nle", "--no-letters", dest='no_letters',
                         help="Exclude letters from the password", action='store_true', default=DEFAULT_BOOL)
+    parser.add_argument("-nn", "--no-numbers", help="Exclude numbers from the password",
+                        action='store_true', default=DEFAULT_BOOL)
+    parser.add_argument("-ns", "--no-symbols", help="Exclude special symbols from the password",
+                        action='store_true', default=DEFAULT_BOOL)
+    parser.add_argument("-nu", "--no-uppercase", help="Exclude uppercase letters from the password",
+                        action='store_true', default=DEFAULT_BOOL)
 
     return parser
 

@@ -66,6 +66,8 @@ def get_character_set(no_letters, no_lowercase, no_numbers, no_symbols, no_upper
 
 
 def generate_password(length, chars):
+    if length < 1:
+        raise ValueError(f"Length must be at least 1. Got {length}")
     # Convert the string of characters into a list
     char_list = list(chars)
     # Shuffle the list of characters

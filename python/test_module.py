@@ -1,5 +1,5 @@
 import unittest
-from password_generator import create_parser, get_character_set, generate_password, NUMBER_CHARS, SYMBOL_CHARS
+from password_generator import create_parser, get_character_set, generate_password, NUMBER_CHARS, SYMBOL_CHARS, ALPHA_CHARS, LOWER_CHARS, UPPER_CHARS
 
 
 class TestPasswordGenerator(unittest.TestCase):
@@ -56,6 +56,37 @@ class TestPasswordGenerator(unittest.TestCase):
         with self.assertRaises(ValueError):
             get_character_set(no_letters=True, no_lowercase=True,
                               no_numbers=True, no_symbols=True, no_uppercase=True)
+
+
+class TestFlagCombinations(unittest.TestCase):
+    def test_no_lowercase_only(self):
+        chars = get_character_set(no_letters=False, no_lowercase=True,
+                                  no_numbers=False, no_symbols=False, no_uppercase=False)
+        self.assertNotIn(LOWER_CHARS, chars)
+        self.assertIn(UPPER_CHARS, chars)
+
+    def test_no_uppercase_only(self):
+        chars = get_character_set(no_letters=False, no_lowercase=False,
+                                  no_numbers=False, no_symbols=False, no_uppercase=True)
+        self.assertNotIn(UPPER_CHARS, chars)
+        self.assertIn(LOWER_CHARS, chars)
+
+    def test_no_numbers_no_symbols(self):
+        chars = get_character_set(no_letters=False, no_lowercase=False,
+                                  no_numbers=True, no_symbols=True, no_uppercase=False)
+        self.assertNotIn(NUMBER_CHARS + SYMBOL_CHARS, chars)
+        self.assertIn(ALPHA_CHARS, chars)
+
+    def test_no_uppercase_no_lowercase(self):
+        chars = get_character_set(no_letters=False, no_lowercase=True,
+                                  no_numbers=False, no_symbols=False, no_uppercase=True)
+        self.assertNotIn(UPPER_CHARS + LOWER_CHARS, chars)
+        self.assertIn(NUMBER_CHARS + SYMBOL_CHARS, chars)
+
+    def test_invalid_length(self):
+        with self.assertRaises(ValueError):
+            # Assuming length must be at least 1
+            generate_password(0, ALPHA_CHARS)
 
 
 if __name__ == '__main__':

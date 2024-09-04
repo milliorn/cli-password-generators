@@ -19,8 +19,8 @@ ALPHA_CHARS = UPPER_CHARS + LOWER_CHARS
 def create_parser():
     parser = argparse.ArgumentParser(description=APP_NAME)
 
-    parser.add_argument("-l", "--length", type=int,
-                        help="Length of the password", default=DEFAULT_LENGTH)
+    parser.add_argument("-l", "--length", type=int, default=DEFAULT_LENGTH,
+                        help="Specify the length of the password (default: 8).")
     parser.add_argument("-nl", "--no-lowercase", dest='no_lowercase',
                         help="Exclude lowercase letters from the password", action='store_true', default=DEFAULT_BOOL)
     parser.add_argument("-nle", "--no-letters", dest='no_letters',

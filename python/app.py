@@ -1,6 +1,7 @@
 import argparse
 import os
-import random
+
+from random import shuffle
 
 APP_NAME = "CLI-Password Generator"
 LOWER_CHARS = "abcdefghijklmnopqrstuvwxyz"
@@ -65,7 +66,7 @@ def generate_password(length, chars):
     # Convert the string of characters into a list
     char_list = list(chars)
     # Shuffle the list of characters
-    random.shuffle(char_list)
+    shuffle(char_list)
     # Join the list back into a string and select the first 'length' characters for the password
     password = ''.join(char_list)[:length]
 
@@ -76,10 +77,9 @@ def main():
     parser = create_parser()
     args = parser.parse_args()
 
-
-if args.length < 1:
-    raise ValueError(
-        f"Length must be greater than 0. Provided length: {args.length}")
+    if args.length < 1:
+        raise ValueError(
+            f"Length must be greater than 0. Provided length: {args.length}")
 
     try:
         # Get the character set

@@ -80,7 +80,7 @@ def generate_password(length, chars):
     # Generates a password of specified length from the given set of characters.
     if length < 1:
         # Ensure the password length is at least 1
-        raise ValueError(f"Length must be at least 1. Got {length}")
+        raise ValueError(f"Length must be at least 1. Provided length {length}")
 
     # Shuffle the characters to ensure randomness
     char_list = list(chars)

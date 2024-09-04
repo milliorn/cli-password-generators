@@ -31,11 +31,42 @@ def create_parser():
     return parser
 
 
+def get_character_set(no_letters, no_lowercase, no_numbers, no_symbols, no_uppercase):
+    if no_letters and no_numbers and no_symbols:
+        raise ValueError(
+            "all character types are excluded, unable to generate password")
+
+    buffer_character_set = []
+
+    if not no_letters:
+        if not no_lowercase and not no_uppercase:
+            buffer_character_set.append(ALPHA_CHARS)
+        else:
+            if not no_lowercase:
+                buffer_character_set.append(LOWER_CHARS)
+            if not no_uppercase:
+                buffer_character_set.append(UPPER_CHARS)
+
+    if not no_numbers:
+        buffer_character_set.append(NUMBER_CHARS)
+
+    if not no_symbols:
+        buffer_character_set.append(SYMBOL_CHARS)
+
+    if len(buffer_character_set) == 0:
+        raise ValueError("no characters available for password generation")
+
+    character_set = "".join(buffer_character_set)
+
+    return character_set
+
+
 def main():
     parser = create_parser()
     args = parser.parse_args()
 
-    parser.print_help()
+    # print(args.length)1
+    # parser.print_help()
 
 
 if __name__ == "__main__":

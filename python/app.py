@@ -1,7 +1,6 @@
 import argparse
 import os
 
-
 APP_NAME = "CLI-Password Generator"
 LOWER_CHARS = "abcdefghijklmnopqrstuvwxyz"
 UPPER_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -16,17 +15,17 @@ def create_parser():
     parser = argparse.ArgumentParser(description=APP_NAME)
 
     parser.add_argument(
-        "-l", "--length", help="Length of the password", default=DEFAULT_LENGTH)
-    parser.add_argument("-nm", "--no-numbers",
-                        help="Exclude numbers from the password", default=DEFAULT_BOOL)
+        "-l", "--length", type=int, help="Length of the password", default=DEFAULT_LENGTH)
+    parser.add_argument("-nn", "--no-numbers",
+                        help="Exclude numbers from the password", action='store_true', default=DEFAULT_BOOL)
     parser.add_argument("-ns", "--no-symbols",
-                        help="Exclude special symbols from the password", default=DEFAULT_BOOL)
+                        help="Exclude special symbols from the password", action='store_true', default=DEFAULT_BOOL)
     parser.add_argument("-nu", "--no-uppercase",
-                        help="Exclude uppercase letters from the password", default=DEFAULT_BOOL)
-    parser.add_argument("--nl", "--no-lowercase",
-                        help="Exclude lowercase letters from the password", default=DEFAULT_BOOL)
-    parser.add_argument("--nle", "--no-letters",
-                        help="Exclude letters from the password", default=DEFAULT_BOOL)
+                        help="Exclude uppercase letters from the password", action='store_true', default=DEFAULT_BOOL)
+    parser.add_argument("-nl", "--no-lowercase", dest='no_lowercase',
+                        help="Exclude lowercase letters from the password", action='store_true', default=DEFAULT_BOOL)
+    parser.add_argument("-nle", "--no-letters", dest='no_letters',
+                        help="Exclude letters from the password", action='store_true', default=DEFAULT_BOOL)
 
     return parser
 
@@ -34,7 +33,7 @@ def create_parser():
 def get_character_set(no_letters, no_lowercase, no_numbers, no_symbols, no_uppercase):
     if no_letters and no_numbers and no_symbols:
         raise ValueError(
-            "all character types are excluded, unable to generate password")
+            "All character types are excluded, unable to generate password")
 
     buffer_character_set = []
 
@@ -54,7 +53,7 @@ def get_character_set(no_letters, no_lowercase, no_numbers, no_symbols, no_upper
         buffer_character_set.append(SYMBOL_CHARS)
 
     if len(buffer_character_set) == 0:
-        raise ValueError("no characters available for password generation")
+        raise ValueError("No characters available for password generation")
 
     character_set = "".join(buffer_character_set)
 
@@ -65,8 +64,20 @@ def main():
     parser = create_parser()
     args = parser.parse_args()
 
-    # print(args.length)1
-    # parser.print_help()
+    try:
+        # Get the character set
+        chars = get_character_set(
+            args.no_letters,
+            args.no_lowercase,
+            args.no_numbers,
+            args.no_symbols,
+            args.no_uppercase)
+
+    except ValueError as e:
+        # Handle the error by re-raising it with additional context
+        raise ValueError(f"Failed to get character set: {e}")
+
+    # print(chars)
 
 
 if __name__ == "__main__":

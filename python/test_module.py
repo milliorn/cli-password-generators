@@ -105,6 +105,11 @@ class TestFlagCombinations(unittest.TestCase):
         with self.assertRaises(ValueError):
             generate_password(0, ALPHA_CHARS)
 
+    def test_negative_length(self):
+        # Verify that a negative length value raises a ValueError
+        with self.assertRaises(ValueError):
+            generate_password(-1, ALPHA_CHARS)
+
 
 if __name__ == '__main__':
     unittest.main()

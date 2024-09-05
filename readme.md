@@ -1,6 +1,8 @@
 # cli-password-generator
 
 [![CodeQL](https://github.com/milliorn/cli-password-generators/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/milliorn/cli-password-generators/actions/workflows/github-code-scanning/codeql)
+[![Dependabot reviewer](https://github.com/milliorn/cli-password-generators/actions/workflows/automerge.yml/badge.svg)](https://github.com/milliorn/cli-password-generators/actions/workflows/automerge.yml)
+[![Dependabot Updates](https://github.com/milliorn/cli-password-generators/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/milliorn/cli-password-generators/actions/workflows/dependabot/dependabot-updates)
 
 This repository contains simple command-line applications for generating passwords. It is built and utilizes various libraries and languages to generate random passwords and perform other functionalities.
 

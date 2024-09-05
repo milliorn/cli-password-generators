@@ -22,3 +22,9 @@ updates:
     directory: "/golang"
     schedule:
       interval: "monthly"
+
+  # Maintain dependencies for Go Modules
+  - package-ecosystem: "pip"
+    directory: "/python"
+    schedule:
+      interval: "monthly"

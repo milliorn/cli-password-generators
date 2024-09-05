@@ -6,6 +6,7 @@ from random import shuffle
 APP_NAME = "CLI-Password Generator"
 DEFAULT_BOOL = False
 DEFAULT_LENGTH = 8
+DEFAULT_OUTPUT_FILE = "password.txt"  # Default output filename
 
 # Character sets used in password generation
 NUMBER_CHARS = "0123456789"
@@ -37,6 +38,9 @@ def create_parser():
 
     parser.add_argument("-nu", "--no-uppercase", help="Exclude uppercase letters from the password",
                         action='store_true', default=DEFAULT_BOOL)
+
+    parser.add_argument("-o", "--output", nargs='?', const='password.txt', default=None,
+                        help=f"Output file to write the password to. Defaults to {DEFAULT_OUTPUT_FILE} in the script's directory if -o is used without specifying a file.")
 
     return parser
 
@@ -80,7 +84,8 @@ def generate_password(length, chars):
     # Generates a password of specified length from the given set of characters.
     if length < 1:
         # Ensure the password length is at least 1
-        raise ValueError(f"Length must be at least 1. Provided length {length}")
+        raise ValueError(
+            f"Length must be at least 1. Provided length {length}")
 
     # Shuffle the characters to ensure randomness
     char_list = list(chars)
@@ -116,7 +121,13 @@ def main():
 
     # Generate and print the password
     password = generate_password(args.length, chars)
-    print(password)
+
+    if args.output:  # If an output file is specified
+        with open(args.output, "w") as file:
+            file.write(password)
+            print(f"Password written to {args.output}")
+    else:
+        print(password)  # Otherwise, print the password to the console
 
 
 if __name__ == "__main__":

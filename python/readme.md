@@ -31,6 +31,8 @@ python password_generator.py -o mypassword.txt
 python password_generator.py -h
 ```
 
+You can do the same with the .exe included by just doing `./password_generator.exe`
+
 ## Options
 
 - **-l, --length:** Specify the length of the password (default: 8).

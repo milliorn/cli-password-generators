@@ -7,10 +7,10 @@ import savePassword from "./utils/savePassword.js";
 program.version("1.0.0").description("Password Generator");
 
 program
-  .option("-l, --length <number>", "length of password", "8")
-  .option("-s, --save", "save password to passwords.txt")
-  .option("-nn, --no-numbers", "remove numbers")
-  .option("-ns, --no-symbols", "remove symbols")
+  .option("-l, --length <number>", "Length of password", "8")
+  .option("-s, --save", "Save password to passwords.txt")
+  .option("-n, --no-numbers", "Exclude numbers")
+  .option("-y, --no-symbols", "Exclude symbols")
   .parse();
 
 /** deconstruct options passed in */

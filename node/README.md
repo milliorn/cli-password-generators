@@ -16,10 +16,16 @@ You can also customize the behavior of the password generation using the followi
 
 - `-l, --length`: Specify the length of the password (default: 8).
 - `-s, --save`: Save the generated password to the `passwords.txt` file.
-- `-nn, --no-numbers`: Remove numbers from the generated password.
-- `-ns, --no-symbols`: Remove symbols from the generated password.
+- `-n, --no-numbers`: Remove numbers from the generated password.
+- `-y, --no-symbols`: Remove symbols from the generated password.
 
 For example, to generate a password with a length of 20 characters and save it to the `passwords.txt` file, use the following command `node ./dist/index --length=20 -s`
+
+## Examples
+
+Generate a 20-character password and save it:
+node ./dist/index --length=20 --save
+
 
 ## Dependencies
 

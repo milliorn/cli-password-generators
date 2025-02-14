@@ -5,11 +5,12 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "save": "node ./dist/index -s",
-    "no-numbers": "node ./dist/index -nn -s",
-    "no-symbols": "node ./dist/index -ns -s",
-    "only-letters": "node ./dist/index -nn -ns -s",
-    "tsc:build": "cd ./src && npx tsc"
+    "save": "node ./dist/index --save",
+    "no-numbers": "node ./dist/index -n --save",
+    "no-symbols": "node ./dist/index -y --save",
+    "only-letters": "node ./dist/index -n -y --save",
+    "tsc:build": "cd ./src && npx tsc",
+    "rebuild": "npx rimraf dist && npm run tsc:build"
   },
   "repository": {
     "type": "git",

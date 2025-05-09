@@ -15,27 +15,20 @@ jobs:
         id: dependabot-metadata
         uses: dependabot/fetch-metadata@v2.3.0
 
-      - name: Squash and merge Dependabot PRs
-        run: gh pr merge --squash --auto "${{ github.event.pull_request.number }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Approve patch and minor updates
+      - name: Approve and auto-merge minor and patch updates
         if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch' || steps.dependabot-metadata.outputs.update-type == 'version-update:semver-minor' }}
-        run: gh pr review ${{ github.event.pull_request.number }} --approve -b "I'm **approving** this pull request because **it includes a patch or minor update**"
+        run: |
+          gh pr review "$PR_URL" --approve -b "Auto-approved: This pull request includes a **patch** or **minor** update."
+          gh pr merge "$PR_URL" --squash --auto
         env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Approve minor updates of development dependencies
-        if: ${{ (steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch' || steps.dependabot-metadata.outputs.update-type == 'version-update:semver-minor') && steps.dependabot-metadata.outputs.dependency-scope == 'development' }}
-        run: gh pr review ${{ github.event.pull_request.number }} --approve -b "I'm **approving** this pull request because **it includes a minor or patch update of a dependency used only in development**"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Comment on major updates of dependencies
+      - name: Flag major updates for manual approval
         if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-major' }}
         run: |
-          gh pr comment ${{ github.event.pull_request.number }} --body "I'm **not approving** this PR because **it includes a major update**"
-          gh pr edit ${{ github.event.pull_request.number }} --add-label "requires-manual-qa"
+          gh pr comment "$PR_URL" --body "🚨 **Manual approval required:** This PR includes a **major update**. The repository owner must review and approve it."
+          gh pr edit "$PR_URL" --add-label "requires-manual-approval"
         env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

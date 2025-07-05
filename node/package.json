@@ -29,7 +29,7 @@
     "random-seed": "^0.3.0"
   },
   "devDependencies": {
-    "@types/node": "^22.0.2",
+    "@types/node": "^24.0.8",
     "@types/random-seed": "^0.3.3",
     "nodemon": "^3.0.0",
     "ts-node": "^10.9.1",

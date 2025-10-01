@@ -24,7 +24,7 @@
   "homepage": "https://github.com/milliorn/cli-password-generators#readme",
   "dependencies": {
     "chalk": "^5.1.2",
-    "clipboardy": "^4.0.0",
+    "clipboardy": "^5.0.0",
     "commander": "^13.1.0",
     "random-seed": "^0.3.0"
   },

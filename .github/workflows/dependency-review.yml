@@ -38,7 +38,7 @@ jobs:
     steps:
       # Check out the repository so the action can read the manifest files.
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 1
 
@@ -47,7 +47,7 @@ jobs:
       # retry-on-snapshot-warnings retries if GitHub's dependency graph hasn't
       # indexed the commit yet, ensuring a complete scan before passing.
       - name: Dependency Review
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v4.9.0
         with:
           comment-summary-in-pr: always
           fail-on-severity: low

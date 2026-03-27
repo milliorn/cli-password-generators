@@ -15,10 +15,12 @@
       "noImplicitReturns": false,
       "noImplicitUseStrict": false,
       "outDir": "dist/",
+      "rootDir": "src",
       "baseUrl": "src/",
       "listFiles": false,
       "noEmitHelpers": true,
-      "esModuleInterop": true
+      "esModuleInterop": true,
+      "ignoreDeprecations": "6.0"
    },
    "include": [
       "src/**/*"

@@ -31,7 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deny major updates
-        if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-major' }}
+        if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-major' && steps.dependabot-metadata.outputs.package-ecosystem != 'github-actions' }}
         run: |
           gh pr review "$PR_URL" --request-changes -b "🚫 Denied: This PR includes a **major update**, which is not allowed."
           gh pr close "$PR_URL"

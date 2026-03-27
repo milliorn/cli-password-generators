@@ -27,13 +27,20 @@ env:
   # Avoids a breaking change when GitHub drops Node.js 20 support for actions.
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
+concurrency:
+  group: dependency-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   dependency-review:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       # Check out the repository so the action can read the manifest files.
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       # Scan changed dependency files and fail if any known vulnerability
       # at low severity or higher is introduced by this PR.

@@ -4,7 +4,12 @@ This repository contains a simple command-line application for generating passwo
 
 ## Installation
 
-To install the dependencies, run the following command `npm install`
+To install the dependencies and compile the TypeScript source, run:
+
+```bash
+npm install
+npm run rebuild
+```
 
 ## Usage
 
@@ -25,7 +30,6 @@ For example, to generate a password with a length of 20 characters and save it t
 
 Generate a 20-character password and save it:
 node ./dist/index --length=20 --save
-
 
 ## Dependencies
 

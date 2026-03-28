@@ -28,7 +28,7 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 concurrency:
-  group: dependency-review-${{ github.event.pull_request.number }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
@@ -44,10 +44,8 @@ jobs:
 
       # Scan changed dependency files and fail if any known vulnerability
       # at low severity or higher is introduced by this PR.
-      # retry-on-snapshot-warnings retries if GitHub's dependency graph hasn't
-      # indexed the commit yet, ensuring a complete scan before passing.
       - name: Dependency Review
         uses: actions/dependency-review-action@v4.9.0
         with:
-          comment-summary-in-pr: always
+          comment-summary-in-pr: on-failure
           fail-on-severity: low

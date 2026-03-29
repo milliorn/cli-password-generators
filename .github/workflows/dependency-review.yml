@@ -16,6 +16,10 @@ on:
       - "golang/go.mod"
       - "golang/go.sum"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 # https://docs.github.com/en/enterprise-cloud@latest/code-security/supply-chain-security/understanding-your-software-supply-chain/using-the-dependency-submission-api
 permissions:
   contents: read
@@ -26,10 +30,6 @@ env:
   # Opt into Node.js 24 now ahead of the June 2, 2026 forced migration.
   # Avoids a breaking change when GitHub drops Node.js 20 support for actions.
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
 
 jobs:
   dependency-review:
@@ -44,6 +44,7 @@ jobs:
 
       # Scan changed dependency files and fail if any known vulnerability
       # at low severity or higher is introduced by this PR.
+      # Commonly enabled options, see https://github.com/actions/dependency-review-action#configuration-options for all available options.
       - name: Dependency Review
         uses: actions/dependency-review-action@v4.9.0
         with:

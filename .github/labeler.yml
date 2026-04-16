@@ -1,0 +1,52 @@
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - "LICENSE"
+
+github_actions:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/workflows/**"
+          - ".github/dependabot.yml"
+          - ".github/labeler.yml"
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "node/package.json"
+          - "node/package-lock.json"
+          - "golang/go.mod"
+          - "golang/go.sum"
+
+go:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "golang/**/*.go"
+          - "golang/go.mod"
+          - "golang/go.sum"
+          - "golang/.gitignore"
+          - "golang/examples/**"
+
+javascript:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "node/src/**/*.ts"
+          - "node/dist/**/*.js"
+          - "node/tsconfig.json"
+          - "node/package.json"
+          - "node/package-lock.json"
+          - "node/.gitignore"
+
+python:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "python/**/*.py"
+          - "python/.gitignore"
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*_test.go"
+          - "**/test_*.py"
+          - "golang/examples/test.sh"

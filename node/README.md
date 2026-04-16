@@ -1,41 +1,70 @@
-# node-cli-password-generator
+# Node.js / TypeScript Password Generator
 
-This repository contains a simple command-line application for generating passwords. It is built using Node.js and TypeScript and utilizes various libraries to generate random passwords and perform other functionalities.
+A command-line password generator built with Node.js and TypeScript. Generates a random password, copies it to the system clipboard automatically, and optionally saves it to a file.
+
+## Prerequisites
+
+- **Node.js 18 or later**
+- **npm** (bundled with Node.js)
 
 ## Installation
 
-To install the dependencies and compile the TypeScript source, run:
-
 ```bash
+cd node
 npm install
 npm run rebuild
 ```
 
+`npm run rebuild` erases `dist/` and recompiles the TypeScript source. Re-run it any time you modify files under `src/`.
+
 ## Usage
 
-To run the application and generate a password, use the following command `npm run save`
+```bash
+node ./dist/index [options]
+```
 
-This will generate a password with a default length of 8 characters and save it to the `passwords.txt` file.
+Running with no options generates an 8-character password, copies it to the clipboard, and prints a confirmation.
 
-You can also customize the behavior of the password generation using the following options:
+## Flags
 
-- `-l, --length`: Specify the length of the password (default: 8).
-- `-s, --save`: Save the generated password to the `passwords.txt` file.
-- `-n, --no-numbers`: Remove numbers from the generated password.
-- `-y, --no-symbols`: Remove symbols from the generated password.
+| Flag | Short | Default | Description |
+| --- | --- | --- | --- |
+| `--length <number>` | `-l` | `8` | Total length of the generated password |
+| `--save` | `-s` | `false` | Append the password to `passwords.txt` |
+| `--no-numbers` | `-n` | `false` | Exclude digits |
+| `--no-symbols` | `-y` | `false` | Exclude special symbols |
+| `--version` | n/a | n/a | Print the application version and exit |
+| `--help` | `-h` | n/a | Print help text and exit |
 
-For example, to generate a password with a length of 20 characters and save it to the `passwords.txt` file, use the following command `node ./dist/index --length=20 -s`
+> Every invocation copies the password to the clipboard via `clipboardy`, regardless of other flags.
 
 ## Examples
 
-Generate a 20-character password and save it:
-node ./dist/index --length=20 --save
+```bash
+# Default: 8-character password (copied to clipboard)
+node ./dist/index
+
+# 20-character password, saved to passwords.txt
+node ./dist/index --length 20 --save
+
+# Letters only (no digits, no symbols), saved to passwords.txt
+node ./dist/index --no-numbers --no-symbols --save
+```
+
+### npm convenience scripts
+
+```bash
+npm run save           # Generate and save to passwords.txt
+npm run no-numbers     # Exclude digits, save to passwords.txt
+npm run no-symbols     # Exclude symbols, save to passwords.txt
+npm run only-letters   # Exclude both digits and symbols, save to passwords.txt
+```
 
 ## Dependencies
 
-The application relies on the following dependencies:
-
-- [chalk](https://www.npmjs.com/package/chalk): Library for styling the command-line output.
-- [clipboardy](https://www.npmjs.com/package/clipboardy): Library for accessing the system clipboard.
-- [commander](https://www.npmjs.com/package/commander): Library for building command-line interfaces.
-- [random-seed](https://www.npmjs.com/package/random-seed): Library for generating random numbers using a seed.
+| Package | Purpose |
+| --- | --- |
+| `commander` | CLI argument parsing |
+| `chalk` | Terminal output colouring |
+| `clipboardy` | Copies the password to the system clipboard |
+| `random-seed` | Seedable pseudo-random number generator |

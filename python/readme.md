@@ -48,13 +48,7 @@ You can do the same with the .exe included by just doing `./password_generator.e
 The script comes with a comprehensive test suite to ensure functionality. To run the tests, navigate to the project directory and execute:
 
 ```bash
-python -m unittest
-```
-
-or
-
-```bash
-python -m unittest -v
+python3 -m unittest test_module.py -v
 ```
 
 This command will run all defined tests, checking the correctness of the password generator under various conditions.

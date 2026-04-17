@@ -52,12 +52,12 @@ Each implementation lives in its own subdirectory and is entirely self-contained
 
 All implementations draw from the same four character pools. Understanding these pools makes it easier to reason about the flags described in the sections below.
 
-| Pool | Characters |
-| --- | --- |
+| Pool              | Characters                   |
+| ----------------- | ---------------------------- |
 | Uppercase letters | `ABCDEFGHIJKLMNOPQRSTUVWXYZ` |
 | Lowercase letters | `abcdefghijklmnopqrstuvwxyz` |
-| Digits | `0123456789` |
-| Symbols | `!@#$%^&*_-+=` |
+| Digits            | `0123456789`                 |
+| Symbols           | `!@#$%^&*_-+=`               |
 
 By default, every pool is included. Flags let you opt individual pools out. The only hard constraint is that at least one pool must remain enabled; attempting to exclude all pools is treated as a usage error.
 
@@ -107,16 +107,16 @@ Running the binary with no arguments generates an 8-character password using all
 
 ### Go Flags
 
-| Flag | Short | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `--length` | `-l` | integer | `8` | Total length of the generated password. |
-| `--no-letters` | `-nle` | boolean | `false` | Exclude **all** letters (both uppercase and lowercase). |
-| `--no-lowercase` | `-nl` | boolean | `false` | Exclude lowercase letters only. |
-| `--no-numbers` | `-nn` | boolean | `false` | Exclude digits. |
-| `--no-symbols` | `-ns` | boolean | `false` | Exclude special symbols. |
-| `--no-uppercase` | `-nu` | boolean | `false` | Exclude uppercase letters only. |
-| `--version` | `-v` | boolean | n/a | Print the application version and exit. |
-| `--help` | `-h` | boolean | n/a | Print help text and exit. |
+| Flag             | Short  | Type    | Default | Description                                             |
+| ---------------- | ------ | ------- | ------- | ------------------------------------------------------- |
+| `--length`       | `-l`   | integer | `8`     | Total length of the generated password.                 |
+| `--no-letters`   | `-nle` | boolean | `false` | Exclude **all** letters (both uppercase and lowercase). |
+| `--no-lowercase` | `-nl`  | boolean | `false` | Exclude lowercase letters only.                         |
+| `--no-numbers`   | `-nn`  | boolean | `false` | Exclude digits.                                         |
+| `--no-symbols`   | `-ns`  | boolean | `false` | Exclude special symbols.                                |
+| `--no-uppercase` | `-nu`  | boolean | `false` | Exclude uppercase letters only.                         |
+| `--version`      | `-v`   | boolean | n/a     | Print the application version and exit.                 |
+| `--help`         | `-h`   | boolean | n/a     | Print help text and exit.                               |
 
 > **Note on flag precedence:** `--no-letters` takes priority over `--no-lowercase` and `--no-uppercase`. If you pass `--no-letters`, both letter pools are excluded regardless of the other letter-related flags.
 
@@ -190,16 +190,16 @@ Running the script with no arguments generates an 8-character password and print
 
 ### Python Flags
 
-| Flag | Short | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `--length` | `-l` | integer | `8` | Total length of the generated password. |
-| `--no-letters` | `-nle` | boolean | `false` | Exclude **all** letters (both uppercase and lowercase). |
-| `--no-lowercase` | `-nl` | boolean | `false` | Exclude lowercase letters only. |
-| `--no-numbers` | `-nn` | boolean | `false` | Exclude digits. |
-| `--no-symbols` | `-ns` | boolean | `false` | Exclude special symbols. |
-| `--no-uppercase` | `-nu` | boolean | `false` | Exclude uppercase letters only. |
-| `--output` | `-o` | string/flag | `None` | Write the generated password to a file instead of stdout. When `-o` is passed without a file path argument, the password is written to `password.txt` in the current directory. When a path is supplied (e.g., `-o /tmp/secret.txt`), that file is used. |
-| `--help` | `-h` | boolean | n/a | Print help text and exit. |
+| Flag             | Short  | Type        | Default | Description                                                                                                                                                                                                                                              |
+| ---------------- | ------ | ----------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--length`       | `-l`   | integer     | `8`     | Total length of the generated password.                                                                                                                                                                                                                  |
+| `--no-letters`   | `-nle` | boolean     | `false` | Exclude **all** letters (both uppercase and lowercase).                                                                                                                                                                                                  |
+| `--no-lowercase` | `-nl`  | boolean     | `false` | Exclude lowercase letters only.                                                                                                                                                                                                                          |
+| `--no-numbers`   | `-nn`  | boolean     | `false` | Exclude digits.                                                                                                                                                                                                                                          |
+| `--no-symbols`   | `-ns`  | boolean     | `false` | Exclude special symbols.                                                                                                                                                                                                                                 |
+| `--no-uppercase` | `-nu`  | boolean     | `false` | Exclude uppercase letters only.                                                                                                                                                                                                                          |
+| `--output`       | `-o`   | string/flag | `None`  | Write the generated password to a file instead of stdout. When `-o` is passed without a file path argument, the password is written to `password.txt` in the current directory. When a path is supplied (e.g., `-o /tmp/secret.txt`), that file is used. |
+| `--help`         | `-h`   | boolean     | n/a     | Print help text and exit.                                                                                                                                                                                                                                |
 
 ### Python Examples
 
@@ -269,12 +269,12 @@ npm run rebuild
 
 **Key dependencies:**
 
-| Package | Purpose |
-| --- | --- |
-| `commander` | CLI argument parsing |
-| `chalk` | Terminal output colouring |
-| `clipboardy` | Automatically copies the generated password to the system clipboard |
-| `random-seed` | Seedable pseudo-random number generator |
+| Package       | Purpose                                                             |
+| ------------- | ------------------------------------------------------------------- |
+| `commander`   | CLI argument parsing                                                |
+| `chalk`       | Terminal output colouring                                           |
+| `clipboardy`  | Automatically copies the generated password to the system clipboard |
+| `random-seed` | Seedable pseudo-random number generator                             |
 
 **Key dev dependencies:** `typescript`, `ts-node`, `nodemon`, `@types/node`, `@types/random-seed`.
 
@@ -296,14 +296,14 @@ A set of convenience `npm` scripts are provided for the most common use cases (s
 
 ### Node.js Flags
 
-| Flag | Short | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `--length <number>` | `-l` | integer | `8` | Total length of the generated password. |
-| `--save` | `-s` | boolean | `false` | Append the generated password to `passwords.txt` in the project directory. |
-| `--no-numbers` | `-n` | boolean | `false` | Exclude digits from the password. |
-| `--no-symbols` | `-y` | boolean | `false` | Exclude special symbols from the password. |
-| `--version` | n/a | boolean | n/a | Print the application version and exit. |
-| `--help` | `-h` | boolean | n/a | Print help text and exit. |
+| Flag                | Short | Type    | Default | Description                                                                |
+| ------------------- | ----- | ------- | ------- | -------------------------------------------------------------------------- |
+| `--length <number>` | `-l`  | integer | `8`     | Total length of the generated password.                                    |
+| `--save`            | `-s`  | boolean | `false` | Append the generated password to `passwords.txt` in the project directory. |
+| `--no-numbers`      | `-n`  | boolean | `false` | Exclude digits from the password.                                          |
+| `--no-symbols`      | `-y`  | boolean | `false` | Exclude special symbols from the password.                                 |
+| `--version`         | n/a   | boolean | n/a     | Print the application version and exit.                                    |
+| `--help`            | `-h`  | boolean | n/a     | Print help text and exit.                                                  |
 
 > **Note:** The Node.js implementation does not currently expose `--no-uppercase`, `--no-lowercase`, or `--no-letters` flags. The character pool always contains both cases of the alphabet; only digits and symbols can be individually excluded.
 >

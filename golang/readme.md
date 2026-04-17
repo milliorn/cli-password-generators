@@ -32,16 +32,16 @@ Running with no arguments generates an 8-character password using all character 
 
 ## Flags
 
-| Flag | Short | Default | Description |
-| --- | --- | --- | --- |
-| `--length` | `-l` | `8` | Total length of the generated password |
-| `--no-letters` | `-nle` | `false` | Exclude all letters (uppercase and lowercase) |
-| `--no-lowercase` | `-nl` | `false` | Exclude lowercase letters only |
-| `--no-numbers` | `-nn` | `false` | Exclude digits |
-| `--no-symbols` | `-ns` | `false` | Exclude special symbols |
-| `--no-uppercase` | `-nu` | `false` | Exclude uppercase letters only |
-| `--version` | `-v` | n/a | Print the application version and exit |
-| `--help` | `-h` | n/a | Print help text and exit |
+| Flag             | Short  | Default | Description                                   |
+| ---------------- | ------ | ------- | --------------------------------------------- |
+| `--length`       | `-l`   | `8`     | Total length of the generated password        |
+| `--no-letters`   | `-nle` | `false` | Exclude all letters (uppercase and lowercase) |
+| `--no-lowercase` | `-nl`  | `false` | Exclude lowercase letters only                |
+| `--no-numbers`   | `-nn`  | `false` | Exclude digits                                |
+| `--no-symbols`   | `-ns`  | `false` | Exclude special symbols                       |
+| `--no-uppercase` | `-nu`  | `false` | Exclude uppercase letters only                |
+| `--version`      | `-v`   | n/a     | Print the application version and exit        |
+| `--help`         | `-h`   | n/a     | Print help text and exit                      |
 
 > `--no-letters` takes priority over `--no-lowercase` and `--no-uppercase`.
 

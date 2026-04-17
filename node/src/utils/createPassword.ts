@@ -7,7 +7,7 @@ const symbols = "!@#$%^&*_-+=";
 export default function createPassword(
   length = 8,
   hasNumbers = true,
-  hasSymbols = true
+  hasSymbols = true,
 ) {
   let chars = alpha;
   hasNumbers ? (chars += numbers) : "";

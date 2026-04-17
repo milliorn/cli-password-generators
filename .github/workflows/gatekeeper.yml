@@ -8,7 +8,7 @@ on:
       - master
 
 jobs:
-  gatekeeper:
+  merge-gatekeeper:
     runs-on: ubuntu-latest
     permissions:
       checks: read

@@ -56,4 +56,3 @@ This command will run all defined tests, checking the correctness of the passwor
 ## Contributing
 
 Contributions are welcome! If you have suggestions for improvements or have found a bug, please feel free to create an issue or submit a pull request.
-

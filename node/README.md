@@ -27,14 +27,14 @@ Running with no options generates an 8-character password, copies it to the clip
 
 ## Flags
 
-| Flag | Short | Default | Description |
-| --- | --- | --- | --- |
-| `--length <number>` | `-l` | `8` | Total length of the generated password |
-| `--save` | `-s` | `false` | Append the password to `passwords.txt` |
-| `--no-numbers` | `-n` | `false` | Exclude digits |
-| `--no-symbols` | `-y` | `false` | Exclude special symbols |
-| `--version` | n/a | n/a | Print the application version and exit |
-| `--help` | `-h` | n/a | Print help text and exit |
+| Flag                | Short | Default | Description                            |
+| ------------------- | ----- | ------- | -------------------------------------- |
+| `--length <number>` | `-l`  | `8`     | Total length of the generated password |
+| `--save`            | `-s`  | `false` | Append the password to `passwords.txt` |
+| `--no-numbers`      | `-n`  | `false` | Exclude digits                         |
+| `--no-symbols`      | `-y`  | `false` | Exclude special symbols                |
+| `--version`         | n/a   | n/a     | Print the application version and exit |
+| `--help`            | `-h`  | n/a     | Print help text and exit               |
 
 > Every invocation copies the password to the clipboard via `clipboardy`, regardless of other flags.
 
@@ -62,9 +62,9 @@ npm run only-letters   # Exclude both digits and symbols, save to passwords.txt
 
 ## Dependencies
 
-| Package | Purpose |
-| --- | --- |
-| `commander` | CLI argument parsing |
-| `chalk` | Terminal output colouring |
-| `clipboardy` | Copies the password to the system clipboard |
-| `random-seed` | Seedable pseudo-random number generator |
+| Package       | Purpose                                     |
+| ------------- | ------------------------------------------- |
+| `commander`   | CLI argument parsing                        |
+| `chalk`       | Terminal output colouring                   |
+| `clipboardy`  | Copies the password to the system clipboard |
+| `random-seed` | Seedable pseudo-random number generator     |

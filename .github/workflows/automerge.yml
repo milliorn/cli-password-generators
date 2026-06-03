@@ -40,17 +40,19 @@ jobs:
         id: metadata
         uses: dependabot/fetch-metadata@v3.1.0
 
-      # Decide once: allow github-actions (any semver) or patch/minor updates;
-      # deny everything else. Major updates are filtered upstream by dependabot.yml,
-      # so deny is a safety net for anything unexpected that slips through.
+      # Allow: github_actions (any semver), patch/minor updates, or grouped PRs
+      # (update-type is null/empty) where dependabot.yml already blocks npm majors.
+      # Deny: anything else (unexpected major npm/pip bumps that slip through).
       - name: Decide
         id: decision
         run: |
           ecosystem="${{ steps.metadata.outputs.package-ecosystem }}"
           update_type="${{ steps.metadata.outputs.update-type }}"
-          if [[ "$ecosystem" == "github-actions" ]] || \
+          if [[ "$ecosystem" == "github_actions" ]] || \
              [[ "$update_type" == "version-update:semver-patch" ]] || \
-             [[ "$update_type" == "version-update:semver-minor" ]]; then
+             [[ "$update_type" == "version-update:semver-minor" ]] || \
+             [[ "$update_type" == "null" ]] || \
+             [[ -z "$update_type" ]]; then
             echo "action=allow" >> "$GITHUB_OUTPUT"
           else
             echo "action=deny" >> "$GITHUB_OUTPUT"
@@ -58,10 +60,9 @@ jobs:
 
       # --auto queues the merge so all required branch protection checks must
       # pass first (e.g. dependency-review) before the merge goes through.
-      - name: Allow — approve and merge
+      - name: Allow — merge
         if: steps.decision.outputs.action == 'allow'
         run: |
-          gh pr review "$PR_URL" --approve -b "Auto-approved: **${{ steps.metadata.outputs.update-type }}** ${{ steps.metadata.outputs.package-ecosystem }} update."
           gh pr merge "$PR_URL" --squash --auto
 
       - name: Deny — unexpected update
